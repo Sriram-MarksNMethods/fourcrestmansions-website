@@ -74,3 +74,23 @@ toggled with a CSS width transition (Heron does it that way too).
 - The headless Playwright browser is `~/.cache/ms-playwright/chromium-1148/chrome-linux/chrome` (global npm playwright).
 - `plan.py` in the research folder points at the old scratchpad paths; change `CAT` to
   `~/Office_work/fourcrest-heron-research/fp/cat/` before re-running.
+
+
+## 2026-11-19 (afternoon): Home finished + all pages built
+- Home: Platform, WhyUs, UseCases ("Made for"), shared `components/Cta.tsx`, `components/Footer.tsx` (in layout, all pages).
+- **InkFill** (`components/InkFill.tsx`): Heron's sketch -> colour pour. Scroll mode (start/end = % of screen for the picture's TOP) or `hover` (pours while pointer is over nearest `[data-fill-hover]`). Sketch + colour must be the SAME size.
+  - Intro: user's ChatGPT sketch + ChatGPT colour (`intro-colour.webp`, original in fourcrest-art-source).
+  - Crest cards: hover pour, colours from ChatGPT (`crest-0N-fill.webp`); crest-04 auto-aligned (scale .94, shift 23/21; script in scratchpad align.py idea).
+  - Platform, CTA, About pictures: pairs made by a pencil filter from real renders (always aligned).
+- Footer wordmark: `lib/footer-wordmark.ts` (Chakra Petch Bold drafting paths, generator `fourcrest-heron-research/wordmark-gen.js`); hover blob is a pre-rendered PNG mask (`ink-blob.png`, `blob.cjs`) because the live SVG filter lagged.
+- "Made for": auto-advance 3.5s, progress bar only (no countdown), pour transition = sliding mask `ink-curtain.png` (`curtain.cjs`), images loading="eager".
+- Removed: cursor square + tail, InkCircle, loader crosshair. Scroll locked during loader. Scrollbar hidden.
+- Floor plan "jump" fix: lock only fires on real wheel/touch/key input near the section (layout refreshes used to snap the page there).
+- Pages: /about, /specifications (sticky tabs + steps + FAQ), /blogs + /blogs/[slug] (`lib/blogs.ts`), /contact (form -> `/api/enquiry` -> `LEAD_WEBHOOK_URL`, server only) -> /thank-you, /privacy-policy, /terms, 404.
+- Favicon `app/icon.svg` (brand F), OG `app/opengraph-image.jpg` (`fourcrest-heron-research/og.cjs`), metadataBase = vercel URL.
+- Stable preview: `npx next build && npx next start -p 3011` (dev on 3010 hot-reloads while editing = looks glitchy).
+
+### Still to do
+- Real copy/phone/email/address, team portraits, partner logos, spec facts (all lorem/placeholder now).
+- Set LEAD_WEBHOOK_URL on Vercel before launch (form only logs without it).
+- Phone/tablet pass of the new pages; nothing committed yet.

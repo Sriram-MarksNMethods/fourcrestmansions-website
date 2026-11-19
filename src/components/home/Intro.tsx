@@ -1,10 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
-import InkCircle from "@/components/InkCircle";
+import InkFill from "@/components/InkFill";
 import OutlineButton from "@/components/OutlineButton";
 import PixelFill from "@/components/PixelFill";
 import Reveal from "@/components/Reveal";
@@ -22,7 +21,7 @@ function ArrowButton({ direction, onClick }: { direction: "prev" | "next"; onCli
       type="button"
       onClick={onClick}
       aria-label={direction === "prev" ? "Previous" : "Next"}
-      className="group relative flex size-45 items-center justify-center overflow-hidden border-l border-line text-ink transition-colors duration-200 hover:text-white"
+      className="group relative flex size-45 items-center justify-center overflow-hidden border-l border-line text-ink transition-colors duration-[400ms] data-filled:text-white"
     >
       <PixelFill color="#8a574c" />
       <ArrowIcon className={`relative size-16 ${direction === "prev" ? "rotate-180" : ""}`} />
@@ -35,15 +34,19 @@ export default function Intro() {
 
   return (
     <section id="intro" className="relative grid grid-cols-1 border-b border-line lg:grid-cols-12 lg:gap-x-20">
-      {/* Left: tall sketch with the ink circle spreading behind it */}
+      {/* Left: sketch that fills with colour as you scroll */}
       <div className="paper relative aspect-square lg:col-span-6 lg:-mr-10 lg:aspect-auto lg:h-867">
-        <InkCircle cx={76} cy={20} r={14} />
-        <Image
-          src="/images/intro-sketch.webp"
+        {/* the sketch fills with colour as you scroll  */}
+        <InkFill
+          sketch="/images/intro-sketch.webp"
+          colour="/images/intro-colour.webp"
+          width={1254}
+          height={1254}
           alt="Fourcrest villa, looking up at the jaali facade"
-          fill
+          start={60}
+          end={0}
           sizes="(min-width: 992px) 50vw, 100vw"
-          className="object-contain mix-blend-multiply"
+          className="mx-auto h-full max-w-full"
         />
       </div>
 

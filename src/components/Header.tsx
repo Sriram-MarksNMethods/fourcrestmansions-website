@@ -38,13 +38,13 @@ export default function Header() {
         </Link>
 
         {/* Desktop menu */}
-        <nav className="col-span-6 -ml-10 hidden lg:flex">
+        <nav className="col-span-6 -ml-10 hidden justify-end lg:flex">
           {NAV.map((item) => (
             <Link
               key={item.label}
               href={item.href}
               data-header-item
-              className="group relative flex w-164 items-start overflow-hidden border-l border-line p-12 text-ink/72 transition-colors duration-[400ms] hover:text-white"
+              className="group relative flex w-164 items-start overflow-hidden border-l border-line p-12 text-ink/72 transition-colors duration-[400ms] data-filled:text-white"
             >
               <PixelFill color={INK} />
               <span className="mono relative text-14">
@@ -56,7 +56,7 @@ export default function Header() {
           <Link
             href={CONTACT_HREF}
             data-header-item
-            className="group relative flex w-200 flex-col justify-between overflow-hidden border-l border-line pt-12 pr-4 pb-4 pl-12 text-brand transition-colors duration-300 hover:text-white"
+            className="group relative flex w-200 flex-col justify-between overflow-hidden border-l border-line pt-12 pr-4 pb-4 pl-12 text-brand transition-colors duration-[400ms] data-filled:text-white"
           >
             <PixelFill color={BRAND} />
             <span className="mono relative text-14">

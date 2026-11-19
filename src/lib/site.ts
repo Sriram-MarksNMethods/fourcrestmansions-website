@@ -2,7 +2,6 @@
 
 export const NAV = [
   { label: "Specifications", href: "/specifications" },
-  { label: "Brochure", href: "/fourcrest-brochure.pdf" },
   { label: "Blogs", href: "/blogs" },
   { label: "About", href: "/about" },
 ];

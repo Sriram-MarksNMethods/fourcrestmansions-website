@@ -127,11 +127,7 @@ export default function Footer() {
       </div>
 
       {/* outlined name between two tick rulers */}
-      <div className="relative border-t border-line">
-        <div className="ticks-x mx-32 h-8 opacity-70" />
-        <FooterWordmark />
-        <div className="ticks-x mx-32 h-8 opacity-70" />
-      </div>
+      <FooterWordmark />
 
       <Reveal start="top+=35% bottom" className="flex flex-col border-t border-line lg:flex-row lg:items-stretch lg:justify-between">
         <p data-reveal="lines" className="mono px-32 py-16 text-12 text-ink-2">

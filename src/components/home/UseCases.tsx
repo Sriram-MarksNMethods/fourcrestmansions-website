@@ -5,9 +5,10 @@ import Image from "next/image";
 import Reveal from "@/components/Reveal";
 
 // "Made for": picture on the left, a list of 8 rows on the right.
-// The open row moves on by itself every 2 seconds; a timer and a progress bar
-// under its name show how long is left. Clicking a row jumps to it.
-// The new picture wipes in from the top over the previous one.
+// The open row moves on by itself every 3.5 seconds; a progress bar under its
+// name shows how long is left. Clicking a row jumps to it.
+// The new picture pours in from the top over the previous one with an inky edge
+// (same look as the ink fill; a pre-rendered mask, /images/ink-curtain.png, slides down).
 const ROWS = [
   { title: "Large families", text: "Five bedrooms over three floors, with room for everyone.", image: "/images/r-family-lounge-hd.webp" },
   { title: "Three generations", text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", image: "/images/r-formal-living-hd.webp" },
@@ -15,11 +16,11 @@ const ROWS = [
   { title: "NRI buyers", text: "Sed do eiusmod tempor incididunt ut labore et dolore.", image: "/images/r-window-morning-hd.webp" },
   { title: "Hosts", text: "Ut enim ad minim veniam, quis nostrud exercitation.", image: "/images/r-library-lounge-hd.webp" },
   { title: "Wellness seekers", text: "Pool, gym and yoga deck in the clubhouse.", image: "/images/r-pool-deck-hd.webp" },
-  { title: "Garden lovers", text: "Landscaped gardens and a jogging and walking track.", image: "/images/r-garden-path-wide.webp" },
+  { title: "Garden lovers", text: "Landscaped gardens and a jogging and walking track.", image: "/images/r-swing-chair-empty.webp" },
   { title: "Quiet living", text: "Just 28 mansions on 6.14 acres, gated and private.", image: "/images/r-wicker-terrace.webp" },
 ];
 
-const DURATION = 2000; // ms each row stays open
+const DURATION = 3500; // ms each row stays open
 
 export default function UseCases() {
   const [active, setActive] = useState(0);
@@ -71,16 +72,17 @@ export default function UseCases() {
 
   return (
     <section ref={sectionRef} className="grid grid-cols-1 border-b border-line lg:h-820 lg:grid-cols-2">
-      {/* pictures: the previous one stays underneath while the new one wipes in */}
+      {/* pictures: the previous one stays underneath while the new one pours in */}
       <div className="relative aspect-[4/3] overflow-hidden border-line lg:aspect-auto lg:border-r">
         {ROWS.map((row, i) => (
           <div
             key={i === active ? `${row.title}-${active}-${previous}` : row.title}
             className={`absolute inset-0 ${
-              i === active ? "z-10 animate-[wipe-down_1s_var(--ease-heron)_both]" : i === previous ? "z-0" : "invisible"
+              i === active ? "z-10 [mask-image:url(/images/ink-curtain.png)] [mask-size:100%_300%] [mask-repeat:no-repeat] animate-[ink-pour_2.4s_cubic-bezier(0.65,0,0.35,1)_both]" : i === previous ? "z-0" : "invisible"
             }`}
           >
-            <Image src={row.image} alt="" fill sizes="(min-width: 992px) 50vw, 100vw" className="object-cover" />
+            {/* eager: the hidden ones must already be loaded when their turn comes, or the pour plays on an empty frame */}
+            <Image src={row.image} alt="" fill loading="eager" sizes="(min-width: 992px) 50vw, 100vw" className="object-cover" />
           </div>
         ))}
       </div>
@@ -113,9 +115,6 @@ export default function UseCases() {
                 >
                   <span className="flex items-center justify-between">
                     <span className="heading text-20">{row.title}</span>
-                    <span className={`mono text-12 tabular-nums transition-opacity duration-300 ${isOpen ? "text-brand" : "opacity-0"}`}>
-                      {isOpen ? `${((DURATION - progress * DURATION) / 1000).toFixed(1)}s` : "0.0s"}
-                    </span>
                   </span>
                   <span
                     className={`grid transition-[grid-template-rows] duration-500 ease-heron ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}

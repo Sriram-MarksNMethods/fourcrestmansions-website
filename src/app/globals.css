@@ -153,13 +153,15 @@
   }
 }
 
-/* "Made for" picture swap: the new picture wipes down over the previous one */
-@keyframes wipe-down {
+/* "Made for" picture swap: the new picture pours down over the previous one.
+   The mask is 3x the picture's height (solid / inky edge / clear); sliding it
+   from the bottom third to the top third moves the edge down across the picture. */
+@keyframes ink-pour {
   from {
-    clip-path: inset(0 0 100% 0);
+    mask-position: 0 100%;
   }
   to {
-    clip-path: inset(0 0 0 0);
+    mask-position: 0 0%;
   }
 }
 

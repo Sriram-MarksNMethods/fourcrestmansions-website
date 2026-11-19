@@ -13,6 +13,9 @@ const interTight = Inter_Tight({ subsets: ["latin"], variable: "--font-inter-tig
 const geistMono = Geist_Mono({ subsets: ["latin"], weight: "500", variable: "--font-geist-mono" });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://fourcrestmansions-website.vercel.app"),
+  openGraph: { type: "website", siteName: "Fourcrest Mansions", locale: "en_IN" },
+  twitter: { card: "summary_large_image" },
   title: { default: "Fourcrest Mansions | Luxury triplex villas in Hyderabad", template: "%s | Fourcrest Mansions" },
   description:
     "28 triplex mansions on 500 sq. yd. plots across 6.14 acres at Mankhal, Hyderabad. A Globus South project.",

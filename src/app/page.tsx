@@ -5,7 +5,7 @@ import FloorPlan from "@/components/home/FloorPlan";
 import Platform from "@/components/home/Platform";
 import WhyUs from "@/components/home/WhyUs";
 import UseCases from "@/components/home/UseCases";
-import Cta from "@/components/home/Cta";
+import Cta from "@/components/Cta";
 
 export default function HomePage() {
   return (

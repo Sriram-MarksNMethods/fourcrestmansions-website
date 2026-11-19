@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Reveal from "@/components/Reveal";
+import InkFill from "@/components/InkFill";
 import OutlineButton from "@/components/OutlineButton";
 
 // Heron's "Platform" section ([01] Chat Widget / [02] Dashboard).
@@ -12,7 +13,7 @@ const ITEMS = [
     title: "The mansions",
     text: "28 triplex mansions, each a 5 BHK on its own plot of about 500 sq. yd. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     href: "/specifications",
-    image: "/images/crest-01.webp",
+    image: "platform-mansions",
     alt: "Fourcrest mansion, artistic impression",
   },
   {
@@ -20,7 +21,7 @@ const ITEMS = [
     title: "The clubhouse",
     text: "A clubhouse of around 13,000 to 18,000 sq. ft. with a swimming pool, gym, yoga deck, games lounge and multipurpose hall.",
     href: "/about",
-    image: "/images/r-clubhouse-hd.webp",
+    image: "platform-clubhouse",
     alt: "Fourcrest clubhouse, artistic impression",
   },
 ];
@@ -48,7 +49,7 @@ export default function Platform() {
 
               {/* picture (phones only; desktop shows it in the middle column) */}
               <div className="relative aspect-[601/355] border-y border-line lg:hidden">
-                <Image src={item.image} alt={item.alt} fill sizes="100vw" className="object-cover" />
+                <Image src={`/images/${item.image}-colour.webp`} alt={item.alt} fill sizes="100vw" className="object-cover" />
               </div>
 
               {/* text + button */}
@@ -68,11 +69,20 @@ export default function Platform() {
       {/* Middle column: the two pictures, one under the other */}
       <div className="max-lg:hidden lg:col-span-5 lg:col-start-4 lg:row-start-1 lg:border-x lg:border-line">
         {ITEMS.map((item) => (
-          <Reveal key={item.id} start="top+=45% bottom" className="paper relative h-426 overflow-hidden border-line not-last:border-b">
-            <div data-reveal="img" className="absolute inset-24">
-              <Image src={item.image} alt={item.alt} fill sizes="35vw" className="object-cover" />
-            </div>
-          </Reveal>
+          // line art that fills with colour as it scrolls past (Heron's ink fill)
+          <div key={item.id} className="paper flex h-426 items-center justify-center overflow-hidden border-line p-24 not-last:border-b">
+            <InkFill
+              sketch={`/images/${item.image}-sketch.webp`}
+              colour={`/images/${item.image}-colour.webp`}
+              width={1600}
+              height={946}
+              alt={item.alt}
+              start={75}
+              end={20}
+              sizes="35vw"
+              className="max-h-full w-full"
+            />
+          </div>
         ))}
       </div>
     </section>

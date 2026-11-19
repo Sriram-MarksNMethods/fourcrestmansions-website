@@ -7,7 +7,7 @@ import Reveal from "@/components/Reveal";
 const STEPS = [
   { title: "Choose", text: "Pick one of four elevations for your mansion", image: "/images/crest-02.webp" },
   { title: "Plan", text: "Lorem ipsum dolor sit amet, consectetur adipiscing", image: "/images/r-family-lounge-hd.webp" },
-  { title: "Build", text: "Sed do eiusmod tempor incididunt ut labore", image: "/images/r-garden-path-wide.webp" },
+  { title: "Build", text: "Sed do eiusmod tempor incididunt ut labore", image: "/images/crest-03.webp" },
   { title: "Live", text: "28 families, 6.14 acres, one gated community", image: "/images/r-pool-deck-hd.webp" },
 ];
 

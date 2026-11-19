@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Reveal from "@/components/Reveal";
+import InkFill from "@/components/InkFill";
 
 // Heron's "Problems" cards, used to show the four elevations (copy from the landing page).
-// Renders: Crest-01..03 = EF OP 1/2/3, Crest-04 = WF OP 1 (stand-in until the client confirms it).
+// Colour fills (crest-0N-fill.webp) are ChatGPT renders made from the ink drawings so they line up.
 const CRESTS = [
   {
     id: "01",
@@ -53,29 +53,25 @@ export default function Crests() {
 
       <Reveal start="top+=30% bottom" className="grid border-t border-dashed border-line md:grid-cols-2 lg:grid-cols-4">
         {CRESTS.map((crest) => (
-          <article key={crest.id} className="group relative flex flex-col border-dashed border-line not-first:border-l max-lg:border-b">
+          <article key={crest.id} data-fill-hover className="group relative flex flex-col border-dashed border-line not-first:border-l max-lg:border-b">
             <div className="relative flex items-center justify-between border-b border-dashed border-line px-32 py-16 text-ink">
               <span className="absolute top-1/2 left-32 size-8 -translate-y-1/2 bg-brand opacity-0 transition-opacity duration-[400ms] group-hover:opacity-100" />
               <span className="mono text-14 transition-transform duration-[400ms] group-hover:translate-x-20">Crest-{crest.id}</span>
               <span className="mono text-14 text-mute">[{crest.style}]</span>
             </div>
 
-            {/* The elevation: ink drawing on the paper, the colour render fades in on hover */}
+            {/* The elevation: ink drawing; on hover the colour pours down over it (Heron's ink fill) */}
             <div className="relative h-360 p-24">
-              <div data-reveal="img" className="relative size-full overflow-hidden">
-                <Image
-                  src={`/images/crest-${crest.id}-ink-v2.webp`}
+              <div data-reveal="img" className="relative flex size-full items-center justify-center">
+                <InkFill
+                  hover
+                  sketch={`/images/crest-${crest.id}-ink-v2.webp`}
+                  colour={`/images/crest-${crest.id}-fill.webp`}
+                  width={1391}
+                  height={1131}
                   alt={`Crest-${crest.id} elevation, illustration`}
-                  fill
                   sizes="(min-width: 992px) 25vw, (min-width: 768px) 50vw, 100vw"
-                  className="object-contain transition-opacity duration-500 group-hover:opacity-0"
-                />
-                <Image
-                  src={`/images/crest-${crest.id}.webp`}
-                  alt=""
-                  fill
-                  sizes="(min-width: 992px) 25vw, (min-width: 768px) 50vw, 100vw"
-                  className="scale-105 object-cover opacity-0 transition-[opacity,scale] duration-700 ease-out-quint group-hover:scale-100 group-hover:opacity-100"
+                  className="max-h-full w-full"
                 />
               </div>
               {corners.map((pos) => (

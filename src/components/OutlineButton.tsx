@@ -7,7 +7,7 @@ export default function OutlineButton({ href, children }: { href: string; childr
   return (
     <Link
       href={href}
-      className="group relative inline-flex items-stretch overflow-hidden border border-line text-ink transition-colors duration-300 hover:text-white"
+      className="group relative inline-flex items-stretch overflow-hidden border border-line text-ink transition-colors duration-[400ms] data-filled:text-white"
     >
       <PixelFill color="#231f20" />
       <span className="mono relative px-16 py-14 text-14">

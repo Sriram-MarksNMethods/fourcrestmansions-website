@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
+import InkFill from "@/components/InkFill";
 import PixelFill from "@/components/PixelFill";
 import { RollArrow, RollText } from "@/components/Roll";
 
@@ -44,17 +44,20 @@ export default function Cta() {
         </div>
       </Reveal>
 
-      <Reveal start="top+=40% bottom" className="relative h-280 border-t border-dashed border-line lg:h-466">
-        <div data-reveal="img" className="absolute inset-x-1/4 inset-y-0 max-lg:inset-x-16">
-          <Image
-            src="/images/villa-stipple.webp"
-            alt="Line drawing of a Fourcrest mansion"
-            fill
-            sizes="50vw"
-            className="object-contain object-bottom"
-          />
-        </div>
-      </Reveal>
+      {/* the sketch fills with colour as you scroll */}
+      <div className="relative flex h-280 justify-center overflow-hidden border-t border-dashed border-line lg:h-466">
+        <InkFill
+          sketch="/images/cta-fill-sketch.webp"
+          colour="/images/cta-fill-colour.webp"
+          width={1600}
+          height={893}
+          alt="Fourcrest mansion, front elevation"
+          start={60}
+          end={15}
+          sizes="(min-width: 992px) 50vw, 100vw"
+          className="h-full"
+        />
+      </div>
     </section>
   );
 }

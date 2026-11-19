@@ -141,7 +141,7 @@ export default function Hero() {
             fill
             priority
             sizes="100vw"
-            className="pointer-events-none object-contain mix-blend-multiply"
+            className="pointer-events-none object-contain"
           />
 
           {/* Guides that appear on hover: dashed level lines and brand dimension lines */}
@@ -218,7 +218,7 @@ export default function Hero() {
             <Link
               data-hero-fade
               href="#intro"
-              className="group relative flex w-171 flex-col justify-between overflow-hidden border-l border-line pt-12 pr-4 pb-4 pl-12 text-brand transition-colors duration-300 hover:text-white"
+              className="group relative flex w-171 flex-col justify-between overflow-hidden border-l border-line pt-12 pr-4 pb-4 pl-12 text-brand transition-colors duration-[400ms] data-filled:text-white"
             >
               <PixelFill color="#8a574c" />
               <span className="mono relative text-14">

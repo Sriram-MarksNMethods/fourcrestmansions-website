@@ -153,9 +153,19 @@ export default function FloorPlan() {
     const lockY = () => section.getBoundingClientRect().top + window.scrollY - 8;
     let releasedAt = 0;
 
+    // Only catch the page when the visitor is scrolling right now. Without this,
+    // a layout shift elsewhere (images/fonts loading) made ScrollTrigger think the
+    // section had just been crossed, and the page jumped here out of nowhere.
+    let lastInput = 0;
+    const markInput = () => (lastInput = Date.now());
+    const inputs = ["wheel", "touchmove", "keydown"] as const;
+    inputs.forEach((type) => window.addEventListener(type, markInput, { passive: true }));
+
     // Hold the page still and hand the wheel to the build.
     const lock = () => {
       if (Date.now() - releasedAt < 800) return; // just let go: don't catch again straight away
+      if (Date.now() - lastInput > 400) return; // not scrolling: a layout shift, ignore
+      if (Math.abs(section.getBoundingClientRect().top - 8) > window.innerHeight * 0.4) return; // not near it
       overshoot = 0;
       const lenis = getLenis();
       lenis?.stop();
@@ -180,6 +190,7 @@ export default function FloorPlan() {
     });
 
     return () => {
+      inputs.forEach((type) => window.removeEventListener(type, markInput));
       trigger.kill();
       observer.kill();
       tl.kill();
