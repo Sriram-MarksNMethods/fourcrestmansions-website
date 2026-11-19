@@ -1,26 +1,169 @@
 @import "tailwindcss";
+@import "lenis/dist/lenis.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+  Fourcrest Mansions: a 1:1 rebuild of heronaiapp.com's layout and motion,
+  in the Fourcrest landing-page colours.
+
+  Sizing works like Heron's: the root font size follows the screen width, so
+  1rem = 10px on a 1728px-wide screen and the whole page scales with the window.
+  Spacing is set to 0.1rem, which means `p-32` = 32px at 1728px, the same
+  numbers you'd read off the Heron design.
+*/
+@theme {
+  --spacing: 0.1rem;
+
+  /* Fourcrest palette (from the landing page brochure colours) */
+  --color-paper: #f1e9e6; /* page background (blush) */
+  --color-ink: #231f20; /* headings, dark panels */
+  --color-ink-2: #4a4243; /* secondary text */
+  --color-body: rgb(35 31 32 / 0.72); /* paragraph text */
+  --color-line: #c7b6b0; /* hairlines and borders */
+  --color-mute: #bcaca6; /* text before it "lights up" on scroll */
+  --color-brand: #8a574c; /* accent: buttons, markers, progress line */
+  --color-deep: #512f28;
+  --color-gold: #f4cd95;
+  --color-cream: #f3e2c2;
+
+  --font-sans: var(--font-inter-tight), Arial, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Heron's type scale */
+  --text-10: 1rem;
+  --text-10--line-height: 1.3;
+  --text-12: 1.2rem;
+  --text-12--line-height: 1.3;
+  --text-14: 1.4rem;
+  --text-14--line-height: 1.4;
+  --text-16: 1.6rem;
+  --text-16--line-height: 1.3;
+  --text-20: 2rem;
+  --text-20--line-height: 1.2;
+  --text-24: 2.4rem;
+  --text-24--line-height: 1.1;
+  --text-28: 2.8rem;
+  --text-28--line-height: 1;
+  --text-32: 3.2rem;
+  --text-32--line-height: 1;
+  --text-40: 4rem;
+  --text-40--line-height: 1;
+  --text-48: 4.8rem;
+  --text-48--line-height: 1;
+  --text-56: 5.6rem;
+  --text-56--line-height: 1;
+
+  --ease-heron: cubic-bezier(0.625, 0.05, 0, 1);
+  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 62rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    font-size: 2.5445292621vw; /* phones: 10px at 393px */
+    background: var(--color-paper);
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior: none;
+    scrollbar-width: none; /* no visible scrollbar (Firefox, Chrome 121+) */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    @media (min-width: 768px) {
+      font-size: 1.1990407674vw; /* tablets: 10px at 834px */
+    }
+    @media (min-width: 992px) {
+      font-size: 0.5787037037vw; /* desktop: 10px at 1728px */
+    }
+  }
+
+  body {
+    overflow-x: clip; /* no sideways scrolling (clip keeps position: sticky working) */
+    font-family: var(--font-sans);
+    font-size: var(--text-16);
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    color: var(--color-body);
+  }
+
+  ::selection {
+    background: var(--color-brand);
+    color: #fff;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Paper texture used by every surface that sits on the page background. */
+@utility paper {
+  background-color: var(--color-paper);
+  background-image: url("/images/paper.png");
+}
+
+/* Mono labels: Heron's small uppercase Geist Mono text. */
+@utility mono {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+/* Section headings: bold, uppercase, tight. */
+@utility heading {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+/* Dashed hairline, like Heron's ruler guides (dash pattern 1 3 10 3). */
+@utility line-dash {
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--color-line) 0 1px,
+    transparent 1px 4px,
+    var(--color-line) 4px 14px,
+    transparent 14px 17px
+  );
+}
+
+/* Ruler ticks along a frame edge: one 1px tick every 8px. */
+@utility ticks-x {
+  background-image: repeating-linear-gradient(to right, var(--color-line) 0 1px, transparent 1px 8px);
+}
+@utility ticks-y {
+  background-image: repeating-linear-gradient(to bottom, var(--color-line) 0 1px, transparent 1px 8px);
+}
+
+/* Scroll reveals (Reveal.tsx): hidden until their start state is set, so nothing flashes. */
+[data-reveal]:not([data-ready]) {
+  visibility: hidden;
+}
+
+/* Heron's soft pulse on markers (opacity .7 ↔ 1, scale .95 ↔ 1, 1.5s) */
+@keyframes pulse-soft {
+  50% {
+    opacity: 0.7;
+    scale: 0.95;
+  }
+}
+
+/* Hero marquee */
+@keyframes marquee-left {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* "Made for" picture swap: the new picture wipes down over the previous one */
+@keyframes wipe-down {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* No visible scrollbar (older Safari/Chrome) */
+html::-webkit-scrollbar {
+  display: none;
 }
